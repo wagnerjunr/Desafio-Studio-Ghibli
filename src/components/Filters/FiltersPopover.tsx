@@ -12,23 +12,18 @@ interface FiltersPopoverProps {
   setShowOnlyFavorites: (value: boolean) => void;
   showOnlyWatchlist: boolean;
   setShowOnlyWatchlist: (value: boolean) => void;
-  showOnlyRated: boolean;
-  setShowOnlyRated: (value: boolean) => void;
-  minRating: number;
-  setMinRating: (value: number) => void;
-  minScore: number;
-  setMinScore: (value: number) => void;
-  resetFilters: () => void;
+  showOnlyNotesList: boolean;
+  setShowOnlyNotesList: (value: boolean) => void;
 }
-
+// Esse componente é um popover que permite filtrar os filmes por favoritos, assistidos e com notas.
+// Ele recebe como props as funções que atualizam o estado do filtro e o estado atual do filtro.
 export const FiltersPopover = ({
   showOnlyFavorites,
   setShowOnlyFavorites,
   showOnlyWatchlist,
   setShowOnlyWatchlist,
-  showOnlyRated,
-  setShowOnlyRated,
-  resetFilters,
+  showOnlyNotesList,
+  setShowOnlyNotesList,
 }: FiltersPopoverProps) => {
   return (
     <Popover>
@@ -52,7 +47,7 @@ export const FiltersPopover = ({
               className="text-sm flex items-center gap-2"
             >
               <Heart size={18} fill="red" />
-              Favorites
+              Favoritos
             </label>
           </div>
 
@@ -67,25 +62,21 @@ export const FiltersPopover = ({
               className="text-sm flex items-center gap-2"
             >
               <Eye size={18} color="black" />
-              Watched
+              Assistidos
             </label>
           </div>
 
           <div className="flex items-center gap-2">
             <Checkbox
               id="rated"
-              checked={showOnlyRated}
-              onCheckedChange={() => setShowOnlyRated(!showOnlyRated)}
+              checked={showOnlyNotesList}
+              onCheckedChange={() => setShowOnlyNotesList(!showOnlyNotesList)}
             />
             <label htmlFor="rated" className="text-sm flex items-center gap-2">
               <NotepadText size={16} color="black" />
-              With Notes
+              Com notas
             </label>
           </div>
-
-          <Button variant="outline" onClick={resetFilters}>
-            Limpar Filtros
-          </Button>
         </div>
       </PopoverContent>
     </Popover>

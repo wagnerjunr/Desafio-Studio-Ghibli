@@ -7,66 +7,76 @@ import { useFilmsStore } from "@/store/useFilmsStore";
 import { FilmesGrid } from "@/components/Films/FilmsGrid";
 import { FiltersPopover } from "@/components/Filters/FiltersPopover";
 import { SortingSelect } from "@/components/Filters/SortingSelect";
+import { RatingFilter } from "@/components/Filters/RatingFilter";
+import { Button } from "@/components/ui/button";
 
 export const Home = () => {
   const { data: films, isLoading } = useGetFilms();
   const [search, setSearch] = useState<string>("");
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
+  // Estados para os filtros para favoritos, assistidos e notas.Caso estejam como true o filtro se comportará para filtrar os filmes que correspondem aos filtros selecionados.
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
   const [showOnlyWatchlist, setShowOnlyWatchlist] = useState(false);
-  const [showOnlyRated, setShowOnlyRated] = useState(false);
-  const [minRating, setMinRating] = useState(0);
-  const [minScore, setMinScore] = useState(0);
+  const [showOnlyNotesList, setShowOnlyNotesList] = useState(false);
+  const [minRating, setMinRating] = useState<number>(0);
+
   const [selectedSort, setSelectedSort] = useState<string>("none");
 
-  const { getFilmRating, isFavorite, isInWatchFilms } = useFilmsStore();
+  const { getFilmRating, isFavorite, isInWatchFilms, getNoteFilm } =
+    useFilmsStore();
 
+  // Função para resetar os filtros
   const resetFilters = () => {
     setShowOnlyFavorites(false);
     setShowOnlyWatchlist(false);
-    setShowOnlyRated(false);
+    setShowOnlyNotesList(false);
     setMinRating(0);
-    setMinScore(0);
   };
 
+  // Filtragem dos filmes com base nos filtros e ordenação selecionados
+  // useMemo é usado para memorizar o valor do filteredFilms e evitar que ele seja recalculado a cada renderização.
   const filteredFilms = useMemo(() => {
     if (!films) return [];
 
-    // Filtro de texto (título ou descrição)
     const filtered = films.filter((film) => {
+      // Verifica se o título ou a descrição do filme contém a string de pesquisa.
       const textMatch =
         film.title.toLowerCase().includes(search.toLowerCase()) ||
         (isChecked &&
           film.description.toLowerCase().includes(search.toLowerCase()));
 
+      //Caso os estados dos filtros estiverem como falso, será colocado true e os filmes serão retornados.
+      //Caso os estados dos filtros estiverem como true, será testado o filme com base na função para verificar se o Filme está nos favoritos, assistidos ou tem nota.
+
       // Filtro de favoritos
       const favoriteMatch = !showOnlyFavorites || isFavorite(film.id);
-
+      // Filtro de notas
+      const noteMatch = !showOnlyNotesList || getNoteFilm(film.id);
       // Filtro de watchlist
       const watchlistMatch = !showOnlyWatchlist || isInWatchFilms(film.id);
+      // Filtro de avaliação
+      const ratingMatch =
+        minRating === 0
+          ? true
+          : minRating === 6
+            ? getFilmRating(film.id) !== null && getFilmRating(film.id)! > 0
+            : minRating === -1
+              ? getFilmRating(film.id) === null
+              : getFilmRating(film.id) === minRating;
 
-      // Filtro de avaliação do usuário
-      const rating = getFilmRating(film.id) || 0;
-      const ratingMatch = !showOnlyRated || rating > 0;
-      const minRatingMatch = rating >= minRating;
-
-      const scoreMatch = parseInt(film.rt_score) >= minScore;
-
+      console.log(favoriteMatch, noteMatch, watchlistMatch, ratingMatch);
       return (
-        textMatch &&
-        favoriteMatch &&
-        watchlistMatch &&
-        ratingMatch &&
-        minRatingMatch &&
-        scoreMatch
+        textMatch && favoriteMatch && watchlistMatch && noteMatch && ratingMatch
       );
     });
 
+    console.log(filtered);
     if (selectedSort === "none") {
       return filtered;
     }
-
+    // Ordenação dos filmes. SortFild pega o valor do select e o split separa o valor em duas partes, a primeira parte é o campo que será ordenado e a segunda parte é a direção da ordenação.
+    // Com base na escolha do usuário no componente SortingSelect, o valor do selectedSort é atualizado e assim feito o sorting.
     const [sortField, sortDirection] = selectedSort.split("_");
     console.log(sortField, sortDirection);
 
@@ -106,11 +116,11 @@ export const Home = () => {
     isChecked,
     showOnlyFavorites,
     showOnlyWatchlist,
-    showOnlyRated,
+    showOnlyNotesList,
     minRating,
-    minScore,
     selectedSort,
     getFilmRating,
+    getNoteFilm,
     isFavorite,
     isInWatchFilms,
   ]);
@@ -138,14 +148,10 @@ export const Home = () => {
               setShowOnlyFavorites={setShowOnlyFavorites}
               showOnlyWatchlist={showOnlyWatchlist}
               setShowOnlyWatchlist={setShowOnlyWatchlist}
-              showOnlyRated={showOnlyRated}
-              setShowOnlyRated={setShowOnlyRated}
-              minRating={minRating}
-              setMinRating={setMinRating}
-              minScore={minScore}
-              setMinScore={setMinScore}
-              resetFilters={resetFilters}
+              showOnlyNotesList={showOnlyNotesList}
+              setShowOnlyNotesList={setShowOnlyNotesList}
             />
+            <RatingFilter minRating={minRating} setMinRating={setMinRating} />
           </div>
           <div className="flex justify-end items-center w-full">
             <SortingSelect
@@ -167,12 +173,19 @@ export const Home = () => {
               Incluir sinopse na pesquisa
             </span>
           </label>
+
+          <Button variant="outline" onClick={resetFilters} className="ml-4">
+            Limpar Filtros
+          </Button>
         </div>
       </div>
 
       {filteredFilms && (
         <div>
-          <FilmesGrid films={filteredFilms} />
+          <FilmesGrid
+            films={filteredFilms}
+            search={isChecked ? search : undefined}
+          />
         </div>
       )}
     </div>

@@ -1,16 +1,26 @@
 import { formatTime } from "@/lib/utils";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
-import { Heart, Star, Eye, ClockPlus } from "lucide-react";
+import {
+  Heart,
+  Star,
+  Eye,
+  ClockPlus,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { ModalNotes } from "./_components/ModalNotes";
 import { ModalUpdateNotes } from "./_components/ModalUpdateNote";
 import { toast } from "sonner";
+import { useState } from "react";
 
 interface FilmProps {
   film: FilmsType;
+  search?: string;
 }
 
-export const FilmCard = ({ film }: FilmProps) => {
+export const FilmCard = ({ film, search }: FilmProps) => {
+  const [showFullDescription, setShowFullDescription] = useState(false);
   const thumbnailCover = film.image;
   const {
     addToFavorites,
@@ -26,6 +36,7 @@ export const FilmCard = ({ film }: FilmProps) => {
     getNoteFilm,
   } = useFilmsStore();
 
+  // Pega os dadoos do filme com base na função, caso o filme ja tenha sido adicionado a lista de favoritos, de filme assistidos e de lista de filmes para assistir.
   const filmId = film.id;
   const isFilmFavorite = isFavorite(filmId);
   const inFilmeInWatchFilms = isInWatchFilms(filmId);
@@ -56,6 +67,32 @@ export const FilmCard = ({ film }: FilmProps) => {
     }
   };
 
+  const toggleDescription = () => {
+    setShowFullDescription(!showFullDescription);
+  };
+
+  const highlightSearchTerm = (text: string, searchTerm: string) => {
+    if (!searchTerm || searchTerm.trim() === "") {
+      return <>{text}</>;
+    }
+
+    const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
+
+    return (
+      <>
+        {parts.map((part, index) =>
+          part.toLowerCase() === searchTerm.toLowerCase() ? (
+            <span key={index} className="bg-blue-200 rounded px-1">
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </>
+    );
+  };
+
   return (
     <div className="w-full">
       <div className="flex flex-col gap-4 w-full h-fit rounded-lg  opacity-90 hover:opacity-100  border border-border p-4">
@@ -78,9 +115,33 @@ export const FilmCard = ({ film }: FilmProps) => {
               <p> {film.rt_score}%</p>
             </section>
           </div>
-          <p className="line-clamp-2 text-sm text-gray-600">
-            {film.description}
-          </p>
+          <div>
+            <p
+              className={`text-sm text-gray-600 ${showFullDescription ? "" : "line-clamp-2"}`}
+            >
+              {search
+                ? highlightSearchTerm(film.description, search)
+                : film.description}
+            </p>
+            <button
+              onClick={toggleDescription}
+              className="text-xs text-blue-500 mt-1 flex items-center gap-1 hover:underline"
+            >
+              {showFullDescription ? (
+                <>
+                  Mostrar menos <ChevronUp size={14} />
+                </>
+              ) : (
+                <>
+                  Mostrar tudo <ChevronDown size={14} />
+                </>
+              )}
+            </button>
+          </div>
+          <div className="flex flex-col gap-2 text-xs text-gray-600 my-1">
+            <p>Diretor: {film.director}</p>
+            <p>Produtor: {film.producer}</p>
+          </div>
           <div className="flex items-center justify-between mt-3">
             <div className="flex gap-2">
               <button
@@ -142,7 +203,10 @@ export const FilmCard = ({ film }: FilmProps) => {
 
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
-                <button key={star} className="focus:outline-none cursor-default">
+                <button
+                  key={star}
+                  className="focus:outline-none cursor-default"
+                >
                   <Star
                     size={16}
                     fill={filmRating && filmRating >= star ? "gold" : "none"}
