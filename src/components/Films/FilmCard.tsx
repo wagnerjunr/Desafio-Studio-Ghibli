@@ -4,6 +4,7 @@ import { useFilmsStore } from "@/store/useFilmsStore";
 import { Heart, Star, Eye } from "lucide-react";
 import { ModalNotes } from "./_components/ModalNotes";
 import { ModalUpdateNotes } from "./_components/ModalUpdateNote";
+import { toast } from "sonner";
 
 interface FilmProps {
   film: FilmsType;
@@ -84,6 +85,11 @@ export const FilmCard = ({ film }: FilmProps) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   handleToggleFavorite();
+                  toast.success("Sucesso!", {
+                    description: isFilmFavorite
+                      ? "Removed from favorites movies"
+                      : "Added to favorites movies",
+                  });
                 }}
                 className={`p-2 rounded-full cursor-pointer ${isFilmFavorite ? "bg-red-100 text-red-500" : "bg-gray-100"}`}
               >
@@ -97,6 +103,11 @@ export const FilmCard = ({ film }: FilmProps) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   handleToggleWatchlist();
+                  toast.success("Sucesso!", {
+                    description: inFilmeInWatchFilms
+                      ? "Removed from watched movies"
+                      : "Added to watched movies",
+                  });
                 }}
                 className={`p-2 rounded-full cursor-pointer ${inFilmeInWatchFilms ? "bg-green-100 text-green-500" : "bg-gray-100"}`}
               >
@@ -115,6 +126,11 @@ export const FilmCard = ({ film }: FilmProps) => {
                   onClick={(e) => {
                     e.stopPropagation();
                     handleRateFilm(star);
+                    toast.success("Sucesso!", {
+                      description: filmRating && filmRating >= star
+                        ? "Removed movie rating."
+                        : "Movie rating with success.",
+                    });
                   }}
                   className="focus:outline-none"
                 >
