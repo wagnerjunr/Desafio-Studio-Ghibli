@@ -3,7 +3,6 @@ import { useState } from "react";
 import {
   Modal,
   ModalBody,
-  ModalClose,
   ModalContent,
   ModalDescription,
   ModalHeader,
@@ -11,22 +10,27 @@ import {
   ModalTrigger,
 } from "@/components/ui/modal";
 
-import { ArrowUpRight, NotepadText, X } from "lucide-react";
+import { ArrowUpRight, NotepadText, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
 
 interface FilmProps {
   film: FilmsType;
+  noteFilm: string;
 }
 
-export const ModalNotes = ({ film }: FilmProps) => {
+export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
   const [open, setOpen] = useState(false);
-  const [note, setNote] = useState<string>("");
-  const { addToNoteFilm } = useFilmsStore();
+  const [note, setNote] = useState<string>(noteFilm);
+  const { removeFromNoteFilm, updateNoteFilm } = useFilmsStore();
 
-  const handleAddNoteFilme = () => {
-    addToNoteFilm(film.id, note);
+  const handleUpdateNoteFilme = () => {
+    updateNoteFilm(film.id, note);
+    setOpen(false);
+  };
+  const handleRemoveNoteFilm = () => {
+    removeFromNoteFilm(film.id);
     setOpen(false);
   };
 
@@ -35,14 +39,14 @@ export const ModalNotes = ({ film }: FilmProps) => {
       <ModalTrigger asChild>
         <Button variant="outline" className="w-[90%] cursor-pointer">
           <NotepadText size={16} />
-          Adicionar uma Nota
+          Atualizar Nota
         </Button>
       </ModalTrigger>
       <ModalContent className="md:rounded-xl">
         <ModalHeader>
-          <ModalTitle>Adicionar Nota</ModalTitle>
+          <ModalTitle>Atualizar Nota</ModalTitle>
           <ModalDescription>
-            Adicionar uma nota ao filme {film.title}
+            Atualizar nota do filme {film.title}
           </ModalDescription>
         </ModalHeader>
         <ModalBody className="flex flex-col md:gap-4">
@@ -57,20 +61,22 @@ export const ModalNotes = ({ film }: FilmProps) => {
         </ModalBody>
 
         <div className="flex items-center w-full gap-2 mt-6">
-          <ModalClose className="w-full">
-            <Button variant="secondary" className="w-full">
-              <X size={18} className="mr-2" />
-              Cancelar
-            </Button>
-          </ModalClose>
+          <Button
+            variant="destructive"
+            className="w-full"
+            onClick={handleRemoveNoteFilm}
+          >
+            <Trash size={18} className="mr-2" />
+            Remover Nota
+          </Button>
 
           <Button
             className="w-full"
-            onClick={handleAddNoteFilme}
-            disabled={!note}
+            onClick={handleUpdateNoteFilme}
+            disabled={!note || note.length === 0 || note === noteFilm}
           >
             <ArrowUpRight size={18} className="mr-2" />
-            Adicionar Nota
+            Atualizar Nota
           </Button>
         </div>
       </ModalContent>

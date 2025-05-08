@@ -3,6 +3,7 @@ import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
 import { Heart, BookmarkPlus, Star } from "lucide-react";
 import { ModalNotes } from "./_components/ModalNotes";
+import { ModalUpdateNotes } from "./_components/ModalUpdateNote";
 
 interface FilmProps {
   film: FilmsType;
@@ -19,12 +20,14 @@ export const FilmCard = ({ film }: FilmProps) => {
     isFavorite,
     isInWatchlist,
     getFilmRating,
+    getNoteFilm,
   } = useFilmsStore();
 
   const filmId = film.id;
   const isFilmFavorite = isFavorite(filmId);
   const isFilmInWatchlist = isInWatchlist(filmId);
   const filmRating = getFilmRating(filmId);
+  const noteFilm = getNoteFilm(filmId);
 
   const handleToggleFavorite = () => {
     if (isFilmFavorite) {
@@ -127,7 +130,11 @@ export const FilmCard = ({ film }: FilmProps) => {
         </div>
       </div>
       <div className="flex justify-center">
-        <ModalNotes />
+        {noteFilm ? (
+          <ModalUpdateNotes film={film} noteFilm={noteFilm} />
+        ) : (
+          <ModalNotes film={film} />
+        )}
       </div>
     </div>
   );
