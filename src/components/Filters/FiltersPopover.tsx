@@ -33,7 +33,7 @@ export const FiltersPopover = ({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="icon" className="cursor-pointer">
+        <Button variant="outline" size="icon" className="cursor-pointer px-2">
           <Filter size={18} />
         </Button>
       </PopoverTrigger>
