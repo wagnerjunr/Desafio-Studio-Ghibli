@@ -1,7 +1,7 @@
 import { formatTime } from "@/lib/utils";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
-import { Heart, Star, Eye } from "lucide-react";
+import { Heart, Star, Eye, ClockPlus } from "lucide-react";
 import { ModalNotes } from "./_components/ModalNotes";
 import { ModalUpdateNotes } from "./_components/ModalUpdateNote";
 import { toast } from "sonner";
@@ -17,8 +17,11 @@ export const FilmCard = ({ film }: FilmProps) => {
     removeFromFavorites,
     addToWatchFilms,
     removeFromWatchFilms,
+    addToWatchList,
+    removeFromWatchList,
     rateFilm,
     isFavorite,
+    isInWatchList,
     isInWatchFilms,
     getFilmRating,
     getNoteFilm,
@@ -27,6 +30,7 @@ export const FilmCard = ({ film }: FilmProps) => {
   const filmId = film.id;
   const isFilmFavorite = isFavorite(filmId);
   const inFilmeInWatchFilms = isInWatchFilms(filmId);
+  const isInWatchListMovie = isInWatchList(filmId);
   const filmRating = getFilmRating(filmId);
   const noteFilm = getNoteFilm(filmId);
 
@@ -37,8 +41,15 @@ export const FilmCard = ({ film }: FilmProps) => {
       addToFavorites(filmId);
     }
   };
+  const handleToggleWatchList = () => {
+    if (isInWatchListMovie) {
+      removeFromWatchList(filmId);
+    } else {
+      addToWatchList(filmId);
+      }
+  }
 
-  const handleToggleWatchlist = () => {
+  const handleToggleWatchFilms = () => {
     if (inFilmeInWatchFilms) {
       removeFromWatchFilms(filmId);
     } else {
@@ -102,7 +113,7 @@ export const FilmCard = ({ film }: FilmProps) => {
               <button
                 onClick={(e) => {
                   e.stopPropagation();
-                  handleToggleWatchlist();
+                  handleToggleWatchFilms();
                   toast.success("Sucesso!", {
                     description: inFilmeInWatchFilms
                       ? "Removed from watched movies"
@@ -117,6 +128,24 @@ export const FilmCard = ({ film }: FilmProps) => {
                   fill="none"
                 />
               </button>
+
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleToggleWatchList();
+                  toast.success("Sucesso!", {
+                    description: isInWatchListMovie
+                     ? "Removed from watch list"
+                      : "Added to watch list",
+                  });
+                }}
+                className={`p-2 rounded-full cursor-pointer ${isInWatchListMovie? "bg-blue-100 text-blue-500" : "bg-gray-100"}`}               >
+                <ClockPlus
+                  size={18}
+                  color={isInWatchListMovie? "currentColor" : "black"}
+                  fill="none"
+                />
+              </button>   
             </div>
 
             <div className="flex items-center gap-1">

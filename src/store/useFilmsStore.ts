@@ -15,9 +15,12 @@ interface FilmsState {
   watchFilms: string[];
   noteFilms: NoteFilmsInterface[];
   ratings: FilmRating[];
+  watchList: string[];
   addToFavorites: (filmId: string) => void;
   removeFromFavorites: (filmId: string) => void;
   addToWatchFilms: (filmId: string) => void;
+  addToWatchList: (filmId: string) => void;
+  removeFromWatchList: (filmId: string) => void;
   removeFromWatchFilms: (filmId: string) => void;
   addToNoteFilm: (filmId: string, note: string) => void;
   updateNoteFilm: (filmId: string, note: string) => void;
@@ -25,6 +28,7 @@ interface FilmsState {
   rateFilm: (filmId: string, rating: number) => void;
   isFavorite: (filmId: string) => boolean;
   isInWatchFilms: (filmId: string) => boolean;
+  isInWatchList: (filmId: string) => boolean;
   getFilmRating: (filmId: string) => number | null;
   getNoteFilm: (filmId: string) => string | null;
 }
@@ -36,6 +40,7 @@ export const useFilmsStore = create<FilmsState>()(
       watchFilms: [],
       noteFilms: [],
       ratings: [],
+      watchList: [],
 
       addToFavorites: (filmId) =>
         set((state) => ({
@@ -73,6 +78,18 @@ export const useFilmsStore = create<FilmsState>()(
         set((state) => ({
           watchFilms: state.watchFilms.filter((id) => id !== filmId),
         })),
+
+      addToWatchList: (filmId) =>
+        set((state) => ({
+          watchList: [...state.watchList, filmId],
+        })),
+
+      removeFromWatchList: (filmId) =>
+        set((state) => ({
+          watchList: state.watchList.filter((id) => id !== filmId),
+        })),
+
+      isInWatchList: (filmId) => get().watchList.includes(filmId),
 
       rateFilm: (filmId, rating) =>
         set((state) => {

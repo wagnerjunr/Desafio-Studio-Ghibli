@@ -9,10 +9,10 @@ export const Navbar = () => {
           <LogoStudioGhibli width={180} height={200} />
         </Link>
 
-        <div className="flex items-center justify-center gap-4">
-          <a href="/">Filmes</a>
-          <a href="/movies">Sobre</a>
-          <a href="/favorite-films">Meus Favoritos</a>
+        <div className="flex items-center justify-center gap-6">
+          <a href="/">Movies</a>
+          <a href="/watch-list">WatchList</a>
+          <a href="/favorite-films">Favorites</a>
         </div>
       </div>
     </nav>
