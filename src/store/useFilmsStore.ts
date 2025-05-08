@@ -12,19 +12,19 @@ interface NoteFilmsInterface {
 
 interface FilmsState {
   favorites: string[];
-  watchlist: string[];
+  watchFilms: string[];
   noteFilms: NoteFilmsInterface[];
   ratings: FilmRating[];
   addToFavorites: (filmId: string) => void;
   removeFromFavorites: (filmId: string) => void;
-  addToWatchlist: (filmId: string) => void;
-  removeFromWatchlist: (filmId: string) => void;
+  addToWatchFilms: (filmId: string) => void;
+  removeFromWatchFilms: (filmId: string) => void;
   addToNoteFilm: (filmId: string, note: string) => void;
   updateNoteFilm: (filmId: string, note: string) => void;
   removeFromNoteFilm: (filmId: string) => void;
   rateFilm: (filmId: string, rating: number) => void;
   isFavorite: (filmId: string) => boolean;
-  isInWatchlist: (filmId: string) => boolean;
+  isInWatchFilms: (filmId: string) => boolean;
   getFilmRating: (filmId: string) => number | null;
   getNoteFilm: (filmId: string) => string | null;
 }
@@ -33,7 +33,7 @@ export const useFilmsStore = create<FilmsState>()(
   persist(
     (set, get) => ({
       favorites: [],
-      watchlist: [],
+      watchFilms: [],
       noteFilms: [],
       ratings: [],
 
@@ -64,14 +64,14 @@ export const useFilmsStore = create<FilmsState>()(
           noteFilms: state.noteFilms.filter((film) => film.id !== filmId),
         })),
 
-      addToWatchlist: (filmId) =>
+      addToWatchFilms: (filmId) =>
         set((state) => ({
-          watchlist: [...state.watchlist, filmId],
+          watchFilms: [...state.watchFilms, filmId],
         })),
 
-      removeFromWatchlist: (filmId) =>
+      removeFromWatchFilms: (filmId) =>
         set((state) => ({
-          watchlist: state.watchlist.filter((id) => id !== filmId),
+          watchFilms: state.watchFilms.filter((id) => id !== filmId),
         })),
 
       rateFilm: (filmId, rating) =>
@@ -97,7 +97,7 @@ export const useFilmsStore = create<FilmsState>()(
 
       isFavorite: (filmId) => get().favorites.includes(filmId),
 
-      isInWatchlist: (filmId) => get().watchlist.includes(filmId),
+      isInWatchFilms: (filmId) => get().watchFilms.includes(filmId),
 
       getFilmRating: (filmId) => {
         const rating = get().ratings.find((r) => r.id === filmId);

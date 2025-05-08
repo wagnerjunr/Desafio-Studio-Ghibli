@@ -1,7 +1,7 @@
 import { formatTime } from "@/lib/utils";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
-import { Heart, BookmarkPlus, Star } from "lucide-react";
+import { Heart, Star, Eye } from "lucide-react";
 import { ModalNotes } from "./_components/ModalNotes";
 import { ModalUpdateNotes } from "./_components/ModalUpdateNote";
 
@@ -14,18 +14,18 @@ export const FilmCard = ({ film }: FilmProps) => {
   const {
     addToFavorites,
     removeFromFavorites,
-    addToWatchlist,
-    removeFromWatchlist,
+    addToWatchFilms,
+    removeFromWatchFilms,
     rateFilm,
     isFavorite,
-    isInWatchlist,
+    isInWatchFilms,
     getFilmRating,
     getNoteFilm,
   } = useFilmsStore();
 
   const filmId = film.id;
   const isFilmFavorite = isFavorite(filmId);
-  const isFilmInWatchlist = isInWatchlist(filmId);
+  const inFilmeInWatchFilms = isInWatchFilms(filmId);
   const filmRating = getFilmRating(filmId);
   const noteFilm = getNoteFilm(filmId);
 
@@ -38,10 +38,10 @@ export const FilmCard = ({ film }: FilmProps) => {
   };
 
   const handleToggleWatchlist = () => {
-    if (isFilmInWatchlist) {
-      removeFromWatchlist(filmId);
+    if (inFilmeInWatchFilms) {
+      removeFromWatchFilms(filmId);
     } else {
-      addToWatchlist(filmId);
+      addToWatchFilms(filmId);
     }
   };
 
@@ -98,11 +98,12 @@ export const FilmCard = ({ film }: FilmProps) => {
                   e.stopPropagation();
                   handleToggleWatchlist();
                 }}
-                className={`p-2 rounded-full cursor-pointer ${isFilmInWatchlist ? "bg-blue-100 text-blue-500" : "bg-gray-100"}`}
+                className={`p-2 rounded-full cursor-pointer ${inFilmeInWatchFilms ? "bg-green-100 text-green-500" : "bg-gray-100"}`}
               >
-                <BookmarkPlus
+                <Eye
                   size={18}
-                  fill={isFilmInWatchlist ? "currentColor" : "none"}
+                  color={inFilmeInWatchFilms ? "currentColor" : "black"}
+                  fill="none"
                 />
               </button>
             </div>
