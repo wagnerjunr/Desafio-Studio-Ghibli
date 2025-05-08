@@ -15,6 +15,7 @@ import { ArrowUpRight, NotepadText, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
+import { RatingMovieComponent } from "./RatingMovieComponent";
 
 interface FilmProps {
   film: FilmsType;
@@ -46,6 +47,10 @@ export const ModalNotes = ({ film }: FilmProps) => {
           </ModalDescription>
         </ModalHeader>
         <ModalBody className="flex flex-col md:gap-4">
+          <div className="flex items-center gap-3">
+          <p className="text-base">Avaliação</p>
+          <RatingMovieComponent filmId={film.id} />
+          </div>
           <textarea
             className="w-full h-[150px] p-4 rounded-lg border border-border"
             placeholder="Escreva aqui sua nota..."

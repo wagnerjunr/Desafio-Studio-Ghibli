@@ -19,7 +19,6 @@ export const FilmCard = ({ film }: FilmProps) => {
     removeFromWatchFilms,
     addToWatchList,
     removeFromWatchList,
-    rateFilm,
     isFavorite,
     isInWatchList,
     isInWatchFilms,
@@ -46,22 +45,14 @@ export const FilmCard = ({ film }: FilmProps) => {
       removeFromWatchList(filmId);
     } else {
       addToWatchList(filmId);
-      }
-  }
+    }
+  };
 
   const handleToggleWatchFilms = () => {
     if (inFilmeInWatchFilms) {
       removeFromWatchFilms(filmId);
     } else {
       addToWatchFilms(filmId);
-    }
-  };
-
-  const handleRateFilm = (rating: number) => {
-    if (filmRating === rating) {
-      rateFilm(filmId, 0);
-    } else {
-      rateFilm(filmId, rating);
     }
   };
 
@@ -135,37 +126,25 @@ export const FilmCard = ({ film }: FilmProps) => {
                   handleToggleWatchList();
                   toast.success("Sucesso!", {
                     description: isInWatchListMovie
-                     ? "Removed from watch list"
+                      ? "Removed from watch list"
                       : "Added to watch list",
                   });
                 }}
-                className={`p-2 rounded-full cursor-pointer ${isInWatchListMovie? "bg-blue-100 text-blue-500" : "bg-gray-100"}`}               >
+                className={`p-2 rounded-full cursor-pointer ${isInWatchListMovie ? "bg-blue-100 text-blue-500" : "bg-gray-100"}`}
+              >
                 <ClockPlus
                   size={18}
-                  color={isInWatchListMovie? "currentColor" : "black"}
+                  color={isInWatchListMovie ? "currentColor" : "black"}
                   fill="none"
                 />
-              </button>   
+              </button>
             </div>
 
             <div className="flex items-center gap-1">
               {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleRateFilm(star);
-                    toast.success("Sucesso!", {
-                      description: filmRating && filmRating >= star
-                        ? "Removed movie rating."
-                        : "Movie rating with success.",
-                    });
-                  }}
-                  className="focus:outline-none"
-                >
+                <button key={star} className="focus:outline-none cursor-default">
                   <Star
                     size={16}
-                    className="cursor-pointer"
                     fill={filmRating && filmRating >= star ? "gold" : "none"}
                     color={filmRating && filmRating >= star ? "gold" : "gray"}
                   />

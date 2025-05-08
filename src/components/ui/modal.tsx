@@ -105,7 +105,7 @@ const ModalHeader = ({ className, children, ...props }: ModalProps) => {
   const ModalHeader = isDesktop ? DialogHeader : DrawerHeader
 
   return (
-    <ModalHeader className={cn('p-0 pb-6', className)} {...props}>
+    <ModalHeader className={cn('p-0 pb-2', className)} {...props}>
       {children}
     </ModalHeader>
   )
