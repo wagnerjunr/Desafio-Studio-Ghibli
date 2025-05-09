@@ -37,7 +37,7 @@ export const ModalNotes = ({ film }: FilmProps) => {
       rateFilm(film.id, rating);
     }
     toast.success("Sucesso!", {
-      description: "Adicionado avaliação ao filme com sucesso.",
+      description: "Avaliação adicionada ao filme com sucesso.",
     });
     setOpen(false);
   };

@@ -36,9 +36,6 @@ export const SortingSelect = ({
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor="sort-select" className="text-sm font-medium">
-        Ordenar por:
-      </label>
       <Select value={selectedSort} onValueChange={setSelectedSort}>
         <SelectTrigger className="w-full cursor-pointer" id="sort-select">
           <SelectValue placeholder="Selecione uma opção de ordenação" />

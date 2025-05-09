@@ -4,12 +4,12 @@ import { Search } from "lucide-react";
 import { useState, useMemo } from "react";
 import { Checkbox } from "@/components/ui/chekebox";
 import { useFilmsStore } from "@/store/useFilmsStore";
-import { FilmesGrid } from "@/components/Films/FilmsGrid";
 import { FiltersPopover } from "@/components/Filters/FiltersPopover";
 import { SortingSelect } from "@/components/Filters/SortingSelect";
 import { RatingFilter } from "@/components/Filters/RatingFilter";
-import { Button } from "@/components/ui/button";
 import { SkeletonCard } from "@/components/Skeleton/SkeletonCard";
+import { FilmsGrid } from "@/components/Films/FilmsGrid";
+import { ClearFilterButton } from "@/components/Filters/ClearFilterButton";
 
 export const Home = () => {
   const { data: films, isLoading } = useGetFilms();
@@ -34,6 +34,13 @@ export const Home = () => {
     setShowOnlyNotesList(false);
     setMinRating(0);
   };
+
+  // Verificar se há algum filtro ativo
+  const hasActiveFilters =
+    showOnlyFavorites ||
+    showOnlyWatchlist ||
+    showOnlyNotesList ||
+    minRating !== 0;
 
   // Filtragem dos filmes com base nos filtros e ordenação selecionados
   // useMemo é usado para memorizar o valor do filteredFilms e evitar que ele seja recalculado a cada renderização.
@@ -127,19 +134,19 @@ export const Home = () => {
   ]);
 
   return (
-    <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mx-auto mt-[100px]">
-      <div className="flex flex-col justify-center gap-2">
-        <div className="flex items-center w-full gap-2">
-          <div className="flex items-center w-full gap-2">
-            <Input
-              placeholder="Pesquisar filme"
-              className="w-full max-w-[600px]"
-              icon={Search}
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-              }}
-            />
+    <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mx-auto mt-[100px] md:px-0 px-4">
+      <div className="flex flex-col justify-center gap-4">
+        <div className="flex md:items-center md:flex-row flex-col gap-4 w-full max-w-[800px]">
+          <Input
+            placeholder="Pesquisar filme"
+            className="max-w-[600px] flex-grow"
+            icon={Search}
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+            }}
+          />
+          <div className="flex items-center gap-4">
             <FiltersPopover
               showOnlyFavorites={showOnlyFavorites}
               setShowOnlyFavorites={setShowOnlyFavorites}
@@ -150,31 +157,42 @@ export const Home = () => {
             />
             <RatingFilter minRating={minRating} setMinRating={setMinRating} />
           </div>
-          <div className="flex justify-end items-center w-full">
-            <SortingSelect
-              selectedSort={selectedSort}
-              setSelectedSort={setSelectedSort}
-            />
-          </div>
         </div>
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-2 w-full">
-          <Checkbox
-            id="checkbox"
-            checked={isChecked}
-            onCheckedChange={() => {
-              setIsChecked(!isChecked);
-            }}
-          />
-          <label htmlFor="checkbox">
-            <span className="text-sm text-neutral">
-              Incluir sinopse na pesquisa
-            </span>
-          </label>
 
-          <Button variant="outline" onClick={resetFilters} className="ml-4">
-            Limpar Filtros
-          </Button>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="checkbox"
+              checked={isChecked}
+              onCheckedChange={() => {
+                setIsChecked(!isChecked);
+              }}
+            />
+            <label htmlFor="checkbox">
+              <span className="text-sm text-neutral">
+                Incluir sinopse na pesquisa
+              </span>
+            </label>
+          </div>
+          <SortingSelect
+            selectedSort={selectedSort}
+            setSelectedSort={setSelectedSort}
+          />
         </div>
+        {/* Caso haja algum filtro ativo, esse componente será renderizado e o usuário poderá limpar os filtros e ver filtro ativos. */}
+        {hasActiveFilters && (
+          <ClearFilterButton
+            resetFilters={resetFilters}
+            showOnlyFavorites={showOnlyFavorites}
+            showOnlyWatchlist={showOnlyWatchlist}
+            showOnlyNotesList={showOnlyNotesList}
+            minRating={minRating}
+            setMinRating={setMinRating}
+            setShowOnlyFavorites={setShowOnlyFavorites}
+            setShowOnlyWatchlist={setShowOnlyWatchlist}
+            setShowOnlyNotesList={setShowOnlyNotesList}
+          />
+        )}
       </div>
 
       {isLoading ? (
@@ -182,7 +200,7 @@ export const Home = () => {
       ) : (
         filteredFilms && (
           <div>
-            <FilmesGrid
+            <FilmsGrid
               films={filteredFilms}
               search={isChecked ? search : undefined}
             />

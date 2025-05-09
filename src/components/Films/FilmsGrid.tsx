@@ -3,7 +3,7 @@ import { FilmCard } from "./FilmCard";
 import { useState } from "react";
 import { PaginationComponent } from "../Pagination/PaginationComponent";
 
-export const FilmesGrid = ({
+export const FilmsGrid = ({
   films,
   search,
 }: {
