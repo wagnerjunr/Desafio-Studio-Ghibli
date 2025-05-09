@@ -25,7 +25,7 @@ export const RatingMovieComponent = ({
             key={star}
             onMouseEnter={() => setHoverRating(star)}
             onMouseLeave={() => setHoverRating(0)}
-            onClick={() => setRating(star)}
+            onClick={() => setRating(rating === star ? 0 : star)}
             size={22}
             className={`cursor-pointer transition-transform duration-300 ease-in-out ${
               isActive ? "text-gold" : "text-gray-400"

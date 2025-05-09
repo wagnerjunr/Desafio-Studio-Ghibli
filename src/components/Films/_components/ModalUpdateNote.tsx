@@ -41,6 +41,9 @@ export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
     if (rating !== filmRating) {
       rateFilm(film.id, rating);
     }
+    if (rating === 0) {
+      removeFilmRating(film.id);
+    }
     toast.success("Sucesso!", {
       description: "Nota do filme atualizada com sucesso.",
     });
@@ -102,7 +105,9 @@ export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
           <Button
             className="w-full"
             onClick={handleUpdateNoteFilme}
-            disabled={!note || note.length === 0 || note === noteFilm}
+            disabled={
+              note.length === 0 || (note === noteFilm && rating === filmRating)
+            }
           >
             <ArrowUpRight size={18} className="mr-2" />
             Atualizar Nota

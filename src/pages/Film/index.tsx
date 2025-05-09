@@ -16,12 +16,11 @@ export const FilmPage = () => {
   const thumbnailCover = film?.image;
 
   if (isLoading) {
-    return <LoadingComponent/>
+    return <LoadingComponent />;
   }
 
   const renderRatingStars = (rating: number | undefined) => {
     if (!rating) return null;
-
     return (
       <div className="flex items-center gap-1">
         {Array(5)
@@ -42,12 +41,11 @@ export const FilmPage = () => {
     <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mt-[125px]">
       <div className="flex flex-col md:flex-row gap-8 h-full">
         <div className="md:w-2/5 relative">
-          {filmRating && (
+          {filmRating && filmRating > 0 && (
             <div className="absolute top-4 left-4 bg-black/70 p-2 rounded-lg z-10 flex items-center gap-2">
               {renderRatingStars(filmRating)}
             </div>
           )}
-
           <img
             className="rounded-[12px] w-full h-[550px] object-cover"
             src={thumbnailCover}
