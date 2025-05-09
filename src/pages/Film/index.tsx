@@ -5,6 +5,7 @@ import { formatTime } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFilmsStore } from "@/store/useFilmsStore";
 import { LoadingComponent } from "@/components/LoadingComponent/LoadingComponent";
+import { PageLayout } from "@/components/PageLayout/PageLayout";
 
 export const FilmPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -38,7 +39,7 @@ export const FilmPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mt-[125px]">
+    <PageLayout>
       <div className="flex flex-col md:flex-row gap-8 h-full">
         <div className="md:w-2/5 relative">
           {filmRating && filmRating > 0 && (
@@ -122,6 +123,6 @@ export const FilmPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </PageLayout>
   );
 };

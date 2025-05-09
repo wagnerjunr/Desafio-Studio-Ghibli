@@ -2,6 +2,7 @@ import { useFilmsStore } from "@/store/useFilmsStore";
 import { useGetFilms } from "@/hooks/useGetFilms";
 import { FilmCard } from "@/components/Films/FilmCard";
 import { SkeletonCard } from "@/components/Skeleton/SkeletonCard";
+import { PageLayout } from "@/components/PageLayout/PageLayout";
 
 export const WatchList = () => {
   const { watchList } = useFilmsStore();
@@ -11,7 +12,7 @@ export const WatchList = () => {
     films?.filter((film) => watchList.includes(film.id)) || [];
 
   return (
-    <div className="flex flex-col w-full min-h-full items-center justify-center px-5 py-6 gap-4 max-w-[1324px] mt-[80px]">
+    <PageLayout className="items-center">
       <h1 className="text-2xl font-bold mb-4">Minha Lista</h1>
       {isLoading ? (
         <SkeletonCard />
@@ -26,6 +27,6 @@ export const WatchList = () => {
           ))}
         </div>
       )}
-    </div>
+    </PageLayout>
   );
 };

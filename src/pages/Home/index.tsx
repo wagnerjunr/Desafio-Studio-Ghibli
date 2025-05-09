@@ -10,6 +10,7 @@ import { RatingFilter } from "@/components/Filters/RatingFilter";
 import { SkeletonCard } from "@/components/Skeleton/SkeletonCard";
 import { FilmsGrid } from "@/components/Films/FilmsGrid";
 import { ClearFilterButton } from "@/components/Filters/ClearFilterButton";
+import { PageLayout } from "@/components/PageLayout/PageLayout";
 
 export const Home = () => {
   const { data: films, isLoading } = useGetFilms();
@@ -134,7 +135,7 @@ export const Home = () => {
   ]);
 
   return (
-    <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mx-auto mt-[100px] md:px-0 px-4">
+    <PageLayout>
       <div className="flex flex-col justify-center gap-4">
         <div className="flex md:items-center md:flex-row flex-col gap-4 w-full max-w-[800px]">
           <Input
@@ -207,6 +208,6 @@ export const Home = () => {
           </div>
         )
       )}
-    </div>
+    </PageLayout>
   );
 };

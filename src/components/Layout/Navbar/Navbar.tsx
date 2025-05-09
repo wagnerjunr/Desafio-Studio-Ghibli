@@ -9,10 +9,10 @@ export const Navbar = () => {
     "after:absolute after:left-0 after:bottom-[-4px] after:w-full after:h-[2px] after:bg-primary";
 
   return (
-    <nav className="min-h-[80px] max-h-[100px] w-full flex items-center justify-center py-6 fixed top-0 bg-background backdrop-blur-xl z-30">
-      <div className="max-w-[1324px] w-full flex items-center justify-between">
+    <nav className="min-h-[80px] max-h-[130px] w-full flex items-center justify-center py-6 fixed top-0 bg-background backdrop-blur-xl z-50">
+      <div className="max-w-[1324px] w-full flex flex-col items-center sm:flex-row sm:items-center sm:justify-between gap-4">
         <Link to="/" className="cursor-pointer">
-          <LogoStudioGhibli width={180} height={200} />
+          <LogoStudioGhibli width={180} height={80} />
         </Link>
 
         <div className="flex items-center justify-center gap-6">
