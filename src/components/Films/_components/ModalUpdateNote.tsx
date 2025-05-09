@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
 import { RatingMovieComponent } from "./RatingMovieComponent";
+import { toast } from "sonner";
 
 interface FilmProps {
   film: FilmsType;
@@ -40,6 +41,9 @@ export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
     if (rating !== filmRating) {
       rateFilm(film.id, rating);
     }
+    toast.success("Sucesso!", {
+      description: "Nota do filme atualizada com sucesso.",
+    });
     setOpen(false);
   };
 
@@ -47,6 +51,9 @@ export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
   const handleRemoveNoteFilm = () => {
     removeFromNoteFilm(film.id);
     removeFilmRating(film.id);
+    toast.success("Sucesso!", {
+      description: "Nota do filme removida com sucesso.",
+    });
     setNote("");
     setRating(0);
     setOpen(false);

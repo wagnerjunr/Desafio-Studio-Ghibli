@@ -46,28 +46,55 @@ export const FilmCard = ({ film, search }: FilmProps) => {
 
   //Função para alternar o estado do filme para favorito ou não.
   const handleToggleFavorite = () => {
-    if (isFilmFavorite) {
-      removeFromFavorites(filmId);
-    } else {
-      addToFavorites(filmId);
+    try {
+      if (isFilmFavorite) {
+        removeFromFavorites(filmId);
+      } else {
+        addToFavorites(filmId);
+      }
+      toast.success("Sucesso!", {
+        description: isFilmFavorite
+          ? "Filme removido dos favoritos."
+          : "Filme adicionado aos favoritos.",
+      });
+    } catch (error) {
+      console.error("Erro ao adicionar/remover filme aos favoritos:", error);
     }
   };
 
   // Função para alternar o estado do filme para lista de filmes para assistir ou não.
   const handleToggleWatchList = () => {
-    if (isInWatchListMovie) {
-      removeFromWatchList(filmId);
-    } else {
-      addToWatchList(filmId);
+    try {
+      if (isInWatchListMovie) {
+        removeFromWatchList(filmId);
+      } else {
+        addToWatchList(filmId);
+      }
+      toast.success("Sucesso!", {
+        description: isInWatchListMovie
+          ? "Filme removido da lista de filmes para assistir."
+          : "Filme adicionado à lista de filmes para assistir.",
+      });
+    } catch (error) {
+      console.error("Erro ao adicionar/remover filme aos favoritos:", error);
     }
   };
 
   //Função para alterar o estado do filme para assistido ou não assistido.
   const handleToggleWatchFilms = () => {
-    if (inFilmeInWatchFilms) {
-      removeFromWatchFilms(filmId);
-    } else {
-      addToWatchFilms(filmId);
+    try {
+      if (inFilmeInWatchFilms) {
+        removeFromWatchFilms(filmId);
+      } else {
+        addToWatchFilms(filmId);
+      }
+      toast.success("Sucesso!", {
+        description: inFilmeInWatchFilms
+          ? "Filme removido da lista de filmes assistidos."
+          : "Filme adicionado à lista de filmes assistidos.",
+      });
+    } catch (error) {
+      console.error("Erro ao adicionar/remover filme aos favoritos:", error);
     }
   };
 
@@ -81,9 +108,7 @@ export const FilmCard = ({ film, search }: FilmProps) => {
     if (!searchTerm || searchTerm.trim() === "") {
       return <>{text}</>;
     }
-
     const parts = text.split(new RegExp(`(${searchTerm})`, "gi"));
-
     return (
       <>
         {parts.map((part, index) =>
@@ -156,11 +181,6 @@ export const FilmCard = ({ film, search }: FilmProps) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   handleToggleFavorite();
-                  toast.success("Sucesso!", {
-                    description: isFilmFavorite
-                      ? "Removed from favorites movies"
-                      : "Added to favorites movies",
-                  });
                 }}
                 className={`p-2 rounded-full cursor-pointer ${isFilmFavorite ? "bg-red-100 text-red-500" : "bg-gray-100"}`}
               >
@@ -174,11 +194,6 @@ export const FilmCard = ({ film, search }: FilmProps) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   handleToggleWatchFilms();
-                  toast.success("Sucesso!", {
-                    description: inFilmeInWatchFilms
-                      ? "Removed from watched movies"
-                      : "Added to watched movies",
-                  });
                 }}
                 className={`p-2 rounded-full cursor-pointer ${inFilmeInWatchFilms ? "bg-green-100 text-green-500" : "bg-gray-100"}`}
               >
@@ -193,11 +208,6 @@ export const FilmCard = ({ film, search }: FilmProps) => {
                 onClick={(e) => {
                   e.stopPropagation();
                   handleToggleWatchList();
-                  toast.success("Sucesso!", {
-                    description: isInWatchListMovie
-                      ? "Removed from watch list"
-                      : "Added to watch list",
-                  });
                 }}
                 className={`p-2 rounded-full cursor-pointer ${isInWatchListMovie ? "bg-blue-100 text-blue-500" : "bg-gray-100"}`}
               >
