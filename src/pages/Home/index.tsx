@@ -9,6 +9,7 @@ import { FiltersPopover } from "@/components/Filters/FiltersPopover";
 import { SortingSelect } from "@/components/Filters/SortingSelect";
 import { RatingFilter } from "@/components/Filters/RatingFilter";
 import { Button } from "@/components/ui/button";
+import { SkeletonCard } from "@/components/Skeleton/SkeletonCard";
 
 export const Home = () => {
   const { data: films, isLoading } = useGetFilms();
@@ -125,12 +126,8 @@ export const Home = () => {
     isInWatchFilms,
   ]);
 
-  if (isLoading) {
-    return <div>Carregando...</div>;
-  }
-
   return (
-    <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mt-[100px]">
+    <div className="flex flex-col w-full min-h-full justify-center py-6 gap-4 max-w-[1324px] mx-auto mt-[100px]">
       <div className="flex flex-col justify-center gap-2">
         <div className="flex items-center w-full gap-2">
           <div className="flex items-center w-full gap-2">
@@ -180,13 +177,17 @@ export const Home = () => {
         </div>
       </div>
 
-      {filteredFilms && (
-        <div>
-          <FilmesGrid
-            films={filteredFilms}
-            search={isChecked ? search : undefined}
-          />
-        </div>
+      {isLoading ? (
+        <SkeletonCard />
+      ) : (
+        filteredFilms && (
+          <div>
+            <FilmesGrid
+              films={filteredFilms}
+              search={isChecked ? search : undefined}
+            />
+          </div>
+        )
       )}
     </div>
   );

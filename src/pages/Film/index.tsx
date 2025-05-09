@@ -4,6 +4,7 @@ import { Clock, Star } from "lucide-react";
 import { formatTime } from "@/lib/utils";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useFilmsStore } from "@/store/useFilmsStore";
+import { LoadingComponent } from "@/components/LoadingComponent/LoadingComponent";
 
 export const FilmPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,7 +16,7 @@ export const FilmPage = () => {
   const thumbnailCover = film?.image;
 
   if (isLoading) {
-    return <div>Carregando...</div>;
+    return <LoadingComponent/>
   }
 
   const renderRatingStars = (rating: number | undefined) => {
@@ -101,21 +102,21 @@ export const FilmPage = () => {
 
             <div className="flex flex-col gap-14 mt-6 md:ml-10">
               <div className="border-t-2 border-border">
-                <p className="text-[20px] font-semibold text-blue-950/60">
+                <p className="text-[20px] font-semibold text-blue-800/60">
                   Diretor
                 </p>
                 <p className="text-gray-700 text-base">{film?.director}</p>
               </div>
 
               <div className="border-t-2 border-border">
-                <p className="text-[20px] font-semibold text-blue-950/60">
+                <p className="text-[20px] font-semibold text-blue-800/60">
                   Produtor
                 </p>
                 <p className="text-gray-700 text-base">{film?.producer}</p>
               </div>
 
               <div className="border-t-2 border-border">
-                <p className="text-[20px] font-semibold text-blue-950/60">
+                <p className="text-[20px] font-semibold text-blue-800/60">
                   Ano de lançamento: {film?.release_date}{" "}
                 </p>
               </div>
