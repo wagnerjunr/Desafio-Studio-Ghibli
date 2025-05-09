@@ -1,18 +1,12 @@
 import { formatTime } from "@/lib/utils";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
-import {
-  Heart,
-  Star,
-  Eye,
-  ClockPlus,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Star, ChevronDown, ChevronUp } from "lucide-react";
 import { ModalNotes } from "./_components/ModalNotes";
 import { ModalUpdateNotes } from "./_components/ModalUpdateNote";
-import { toast } from "sonner";
 import { useState } from "react";
+import { FilmActionButtons } from "./_components/Buttons/FilmActionButtons";
+import { FilmRatingDisplay } from "./_components/Buttons/FilmRatingDisplay";
 
 interface FilmProps {
   film: FilmsType;
@@ -21,82 +15,12 @@ interface FilmProps {
 
 export const FilmCard = ({ film, search }: FilmProps) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const {
-    addToFavorites,
-    removeFromFavorites,
-    addToWatchFilms,
-    removeFromWatchFilms,
-    addToWatchList,
-    removeFromWatchList,
-    isFavorite,
-    isInWatchList,
-    isInWatchFilms,
-    getFilmRating,
-    getNoteFilm,
-  } = useFilmsStore();
+  const { getNoteFilm } = useFilmsStore();
   const thumbnailCover = film.image;
 
-  // Pega os dadoos do filme com base na função, caso o filme ja tenha sido adicionado a lista de favoritos, de filme assistidos e de lista de filmes para assistir.
+  // Pega os dados do filme com base na função
   const filmId = film.id;
-  const isFilmFavorite = isFavorite(filmId);
-  const inFilmeInWatchFilms = isInWatchFilms(filmId);
-  const isInWatchListMovie = isInWatchList(filmId);
-  const filmRating = getFilmRating(filmId);
   const noteFilm = getNoteFilm(filmId);
-
-  //Função para alternar o estado do filme para favorito ou não.
-  const handleToggleFavorite = () => {
-    try {
-      if (isFilmFavorite) {
-        removeFromFavorites(filmId);
-      } else {
-        addToFavorites(filmId);
-      }
-      toast.success("Sucesso!", {
-        description: isFilmFavorite
-          ? "Filme removido dos favoritos."
-          : "Filme adicionado aos favoritos.",
-      });
-    } catch (error) {
-      console.error("Erro ao adicionar/remover filme aos favoritos:", error);
-    }
-  };
-
-  // Função para alternar o estado do filme para lista de filmes para assistir ou não.
-  const handleToggleWatchList = () => {
-    try {
-      if (isInWatchListMovie) {
-        removeFromWatchList(filmId);
-      } else {
-        addToWatchList(filmId);
-      }
-      toast.success("Sucesso!", {
-        description: isInWatchListMovie
-          ? "Filme removido da lista de filmes para assistir."
-          : "Filme adicionado à lista de filmes para assistir.",
-      });
-    } catch (error) {
-      console.error("Erro ao adicionar/remover filme aos favoritos:", error);
-    }
-  };
-
-  //Função para alterar o estado do filme para assistido ou não assistido.
-  const handleToggleWatchFilms = () => {
-    try {
-      if (inFilmeInWatchFilms) {
-        removeFromWatchFilms(filmId);
-      } else {
-        addToWatchFilms(filmId);
-      }
-      toast.success("Sucesso!", {
-        description: inFilmeInWatchFilms
-          ? "Filme removido da lista de filmes assistidos."
-          : "Filme adicionado à lista de filmes assistidos.",
-      });
-    } catch (error) {
-      console.error("Erro ao adicionar/remover filme aos favoritos:", error);
-    }
-  };
 
   // Função para alternar a visualização completa da sinopse.
   const toggleDescription = () => {
@@ -176,63 +100,8 @@ export const FilmCard = ({ film, search }: FilmProps) => {
             <p>Produtor: {film.producer}</p>
           </div>
           <div className="flex items-center justify-between mt-3">
-            <div className="flex gap-2">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleToggleFavorite();
-                }}
-                className={`p-2 rounded-full cursor-pointer ${isFilmFavorite ? "bg-red-100 text-red-500" : "bg-gray-100"}`}
-              >
-                <Heart
-                  size={18}
-                  fill={isFilmFavorite ? "currentColor" : "none"}
-                />
-              </button>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleToggleWatchFilms();
-                }}
-                className={`p-2 rounded-full cursor-pointer ${inFilmeInWatchFilms ? "bg-green-100 text-green-500" : "bg-gray-100"}`}
-              >
-                <Eye
-                  size={18}
-                  color={inFilmeInWatchFilms ? "currentColor" : "black"}
-                  fill="none"
-                />
-              </button>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleToggleWatchList();
-                }}
-                className={`p-2 rounded-full cursor-pointer ${isInWatchListMovie ? "bg-blue-100 text-blue-500" : "bg-gray-100"}`}
-              >
-                <ClockPlus
-                  size={18}
-                  color={isInWatchListMovie ? "currentColor" : "black"}
-                  fill="none"
-                />
-              </button>
-            </div>
-
-            <div className="flex items-center gap-1">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <button
-                  key={star}
-                  className="focus:outline-none cursor-default"
-                >
-                  <Star
-                    size={16}
-                    fill={filmRating && filmRating >= star ? "gold" : "none"}
-                    color={filmRating && filmRating >= star ? "gold" : "gray"}
-                  />
-                </button>
-              ))}
-            </div>
+            <FilmActionButtons filmId={filmId} />
+            <FilmRatingDisplay filmId={filmId} />
           </div>
         </div>
       </div>
