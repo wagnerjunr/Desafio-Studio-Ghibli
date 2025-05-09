@@ -55,6 +55,7 @@ export const ModalNotes = ({ film }: FilmProps) => {
             className="w-full h-[150px] p-4 rounded-lg border border-border"
             placeholder="Escreva aqui sua nota..."
             value={note}
+            maxLength={999}
             onChange={(e) => {
               setNote(e.target.value);
             }}

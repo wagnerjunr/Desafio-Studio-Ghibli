@@ -15,4 +15,5 @@ export interface FilmsType {
   vehicles: string[];
   url: string;
   image: string;
+  movie_banner: string;
 }

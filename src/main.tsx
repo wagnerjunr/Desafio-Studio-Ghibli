@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { FavorireFilms } from "./pages/FavoriteFilms";
 import { WatchList } from "./pages/WatchList";
+import { FilmPage } from "./pages/Film";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
       {
         path: "/watch-list",
         element: <WatchList/>,
+      },
+      {
+        path: "/film/:id",
+        element: <FilmPage/>,
       },
     ],
   },

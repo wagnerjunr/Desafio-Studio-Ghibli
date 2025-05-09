@@ -96,11 +96,13 @@ export const FilmCard = ({ film, search }: FilmProps) => {
   return (
     <div className="w-full">
       <div className="flex flex-col gap-4 w-full h-fit rounded-lg  opacity-90 hover:opacity-100  border border-border p-4">
-        <img
-          className="rounded-lg h-[350px] w-full object-cover cursor-pointer transition-all  active:scale-95"
-          src={thumbnailCover}
-          alt="event cover image"
-        />
+        <a href={`/film/${film.id}`}>
+          <img
+            className="rounded-lg h-[350px] w-full object-cover cursor-pointer transition-all  active:scale-95"
+            src={thumbnailCover}
+            alt="event cover image"
+          />
+        </a>
 
         <div className="flex flex-col gap-1 py-2 rounded-b-lg w-full">
           <p className="font-semibold text-lg truncate overflow-hidden whitespace-nowrap text-ellipsis">

@@ -11,7 +11,7 @@ export const WatchList = () => {
 
   return (
     <div className="flex flex-col w-full min-h-full items-center justify-center px-5 py-6 gap-4 max-w-[1324px] mt-[80px]">
-      <h1 className="text-2xl font-bold mb-4">Movies</h1>
+      <h1 className="text-2xl font-bold mb-4">Minha Lista</h1>
 
       {watchlistFilms.length === 0 ? (
         <p className="text-gray-500">

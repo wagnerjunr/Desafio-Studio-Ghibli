@@ -15,7 +15,7 @@ export const FavorireFilms = () => {
       <h1 className="text-2xl font-bold mb-4">Filmes Favoritos</h1>
       
       {watchlistFilms.length === 0 ? (
-        <p className="text-gray-500">Você ainda não adicionou nenhum filme à sua lista.</p>
+        <p className="text-gray-500">Você ainda não adicionou nenhum filme à sua lista de favoritos.</p>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
           {watchlistFilms.map((film) => (
