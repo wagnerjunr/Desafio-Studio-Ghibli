@@ -32,11 +32,11 @@ export const FiltersPopover = ({
           <Filter size={18} />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80">
-        <div className="grid gap-4 py-2">
+      <PopoverContent className="w-[180px]">
+        <div className="grid gap-4 py-2 cursor-pointer">
           <h3 className="font-medium">Filtrar Filmes</h3>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer">
             <Checkbox
               id="favorites"
               checked={showOnlyFavorites}
@@ -44,14 +44,14 @@ export const FiltersPopover = ({
             />
             <label
               htmlFor="favorites"
-              className="text-sm flex items-center gap-2"
+              className="text-sm flex items-center gap-2 cursor-pointer"
             >
               <Heart size={18} fill="red" />
               Favoritos
             </label>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer">
             <Checkbox
               id="watchlist"
               checked={showOnlyWatchlist}
@@ -59,20 +59,20 @@ export const FiltersPopover = ({
             />
             <label
               htmlFor="watchlist"
-              className="text-sm flex items-center gap-2"
+              className="text-sm flex items-center gap-2 cursor-pointer"
             >
               <Eye size={18} color="black" />
               Assistidos
             </label>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 cursor-pointer">
             <Checkbox
               id="rated"
               checked={showOnlyNotesList}
               onCheckedChange={() => setShowOnlyNotesList(!showOnlyNotesList)}
             />
-            <label htmlFor="rated" className="text-sm flex items-center gap-2">
+            <label htmlFor="rated" className="text-sm flex items-center gap-2 cursor-pointer">
               <NotepadText size={16} color="black" />
               Com notas
             </label>
