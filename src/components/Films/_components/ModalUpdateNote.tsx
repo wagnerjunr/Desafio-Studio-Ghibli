@@ -22,16 +22,33 @@ interface FilmProps {
 }
 
 export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
+  const {
+    removeFromNoteFilm,
+    updateNoteFilm,
+    rateFilm,
+    getFilmRating,
+    removeFilmRating,
+  } = useFilmsStore();
+  const filmRating = getFilmRating(film.id);
   const [open, setOpen] = useState(false);
   const [note, setNote] = useState<string>(noteFilm);
-  const { removeFromNoteFilm, updateNoteFilm } = useFilmsStore();
+  const [rating, setRating] = useState<number>(filmRating || 0);
 
+  //Faz o update da nota do filme e da avaliação do filme caso tenha sido alterado
   const handleUpdateNoteFilme = () => {
     updateNoteFilm(film.id, note);
+    if (rating !== filmRating) {
+      rateFilm(film.id, rating);
+    }
     setOpen(false);
   };
+
+  //Remove a nota do filme e remove a avaliação do filme, e limpa os dados de avaliação e nota
   const handleRemoveNoteFilm = () => {
     removeFromNoteFilm(film.id);
+    removeFilmRating(film.id);
+    setNote("");
+    setRating(0);
     setOpen(false);
   };
 
@@ -53,7 +70,7 @@ export const ModalUpdateNotes = ({ film, noteFilm }: FilmProps) => {
         <ModalBody className="flex flex-col md:gap-4">
           <div className="flex items-center gap-3">
             <p className="text-base">Avaliação</p>
-            <RatingMovieComponent filmId={film.id} />
+            <RatingMovieComponent rating={rating} setRating={setRating} />
           </div>
           <textarea
             className="w-full h-[150px] p-4 rounded-lg border border-border"

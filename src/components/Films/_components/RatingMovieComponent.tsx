@@ -1,25 +1,16 @@
 import { useState } from "react";
 import { Star } from "lucide-react";
-import { toast } from "sonner";
-import { useFilmsStore } from "@/store/useFilmsStore";
 
-export const RatingMovieComponent = ({ filmId }: { filmId: string }) => {
+interface RatingMovieComponentProps {
+  rating: number;
+  setRating: (rating: number) => void;
+}
+
+export const RatingMovieComponent = ({
+  rating,
+  setRating,
+}: RatingMovieComponentProps) => {
   const [hoverRating, setHoverRating] = useState(0);
-  const { rateFilm, getFilmRating } = useFilmsStore();
-
-  const filmRating = getFilmRating(filmId);
-
-  const handleRateFilm = (rating: number) => {
-    if (filmRating === rating) {
-      rateFilm(filmId, 0);
-      toast.success("Sucesso!", {
-        description: "Removido avaliação do filme com sucesso.",
-      });
-    } else {
-      rateFilm(filmId, rating);
-      toast.success("Sucesso!", { description: "Filme avaliado com sucesso." });
-    }
-  };
 
   return (
     <div
@@ -28,14 +19,13 @@ export const RatingMovieComponent = ({ filmId }: { filmId: string }) => {
       aria-label="Movie Rating"
     >
       {[1, 2, 3, 4, 5].map((star) => {
-        const isActive =
-          hoverRating >= star || (filmRating && filmRating >= star);
+        const isActive = hoverRating >= star || rating >= star;
         return (
           <Star
             key={star}
             onMouseEnter={() => setHoverRating(star)}
             onMouseLeave={() => setHoverRating(0)}
-            onClick={() => handleRateFilm(star)}
+            onClick={() => setRating(star)}
             size={22}
             className={`cursor-pointer transition-transform duration-300 ease-in-out ${
               isActive ? "text-gold" : "text-gray-400"

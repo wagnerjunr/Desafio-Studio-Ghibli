@@ -21,7 +21,6 @@ interface FilmProps {
 
 export const FilmCard = ({ film, search }: FilmProps) => {
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const thumbnailCover = film.image;
   const {
     addToFavorites,
     removeFromFavorites,
@@ -35,6 +34,7 @@ export const FilmCard = ({ film, search }: FilmProps) => {
     getFilmRating,
     getNoteFilm,
   } = useFilmsStore();
+  const thumbnailCover = film.image;
 
   // Pega os dadoos do filme com base na função, caso o filme ja tenha sido adicionado a lista de favoritos, de filme assistidos e de lista de filmes para assistir.
   const filmId = film.id;
@@ -44,6 +44,7 @@ export const FilmCard = ({ film, search }: FilmProps) => {
   const filmRating = getFilmRating(filmId);
   const noteFilm = getNoteFilm(filmId);
 
+  //Função para alternar o estado do filme para favorito ou não.
   const handleToggleFavorite = () => {
     if (isFilmFavorite) {
       removeFromFavorites(filmId);
@@ -51,6 +52,8 @@ export const FilmCard = ({ film, search }: FilmProps) => {
       addToFavorites(filmId);
     }
   };
+
+  // Função para alternar o estado do filme para lista de filmes para assistir ou não.
   const handleToggleWatchList = () => {
     if (isInWatchListMovie) {
       removeFromWatchList(filmId);
@@ -59,6 +62,7 @@ export const FilmCard = ({ film, search }: FilmProps) => {
     }
   };
 
+  //Função para alterar o estado do filme para assistido ou não assistido.
   const handleToggleWatchFilms = () => {
     if (inFilmeInWatchFilms) {
       removeFromWatchFilms(filmId);
@@ -67,10 +71,12 @@ export const FilmCard = ({ film, search }: FilmProps) => {
     }
   };
 
+  // Função para alternar a visualização completa da sinopse.
   const toggleDescription = () => {
     setShowFullDescription(!showFullDescription);
   };
 
+  // Função para destacar o termo de pesquisa no texto da sinopse.
   const highlightSearchTerm = (text: string, searchTerm: string) => {
     if (!searchTerm || searchTerm.trim() === "") {
       return <>{text}</>;

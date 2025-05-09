@@ -11,11 +11,14 @@ interface NoteFilmsInterface {
 }
 
 interface FilmsState {
+  //Variaveis de estado que serão usadas no componente
   favorites: string[];
   watchFilms: string[];
   noteFilms: NoteFilmsInterface[];
   ratings: FilmRating[];
   watchList: string[];
+
+  //Funções que farão alterações no estado corformes as ações do usuário (adicionar uma anotação/avaliação, adicionar/remover da lista de favoritos, etc)
   addToFavorites: (filmId: string) => void;
   removeFromFavorites: (filmId: string) => void;
   addToWatchFilms: (filmId: string) => void;
@@ -25,7 +28,10 @@ interface FilmsState {
   addToNoteFilm: (filmId: string, note: string) => void;
   updateNoteFilm: (filmId: string, note: string) => void;
   removeFromNoteFilm: (filmId: string) => void;
+  removeFilmRating: (filmId: string) => void;
   rateFilm: (filmId: string, rating: number) => void;
+
+  //Funções que retornarão informações sobre o estado relacionado a um filme (baseado em seu id)
   isFavorite: (filmId: string) => boolean;
   isInWatchFilms: (filmId: string) => boolean;
   isInWatchList: (filmId: string) => boolean;
@@ -67,6 +73,11 @@ export const useFilmsStore = create<FilmsState>()(
       removeFromNoteFilm: (filmId) =>
         set((state) => ({
           noteFilms: state.noteFilms.filter((film) => film.id !== filmId),
+        })),
+
+      removeFilmRating: (filmId) =>
+        set((state) => ({
+          ratings: state.ratings.filter((rating) => rating.id !== filmId),
         })),
 
       addToWatchFilms: (filmId) =>

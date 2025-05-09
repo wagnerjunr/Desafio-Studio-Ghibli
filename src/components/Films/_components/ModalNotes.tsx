@@ -16,18 +16,29 @@ import { Button } from "@/components/ui/button";
 import type { FilmsType } from "@/types/FilmsType";
 import { useFilmsStore } from "@/store/useFilmsStore";
 import { RatingMovieComponent } from "./RatingMovieComponent";
+import { toast } from "sonner";
 
 interface FilmProps {
   film: FilmsType;
 }
 
 export const ModalNotes = ({ film }: FilmProps) => {
+  const { rateFilm } = useFilmsStore();
+
   const [open, setOpen] = useState(false);
   const [note, setNote] = useState<string>("");
+  const [rating, setRating] = useState<number>(0);
   const { addToNoteFilm } = useFilmsStore();
 
+  //Adicione uma anotação ao filme, e caso seja necessário, adicione uma avaliação ao filme
   const handleAddNoteFilme = () => {
     addToNoteFilm(film.id, note);
+    if (rating > 0) {
+      rateFilm(film.id, rating);
+    }
+    toast.success("Sucesso!", {
+      description: "Adicionado avaliação ao filme com sucesso.",
+    });
     setOpen(false);
   };
 
@@ -48,8 +59,8 @@ export const ModalNotes = ({ film }: FilmProps) => {
         </ModalHeader>
         <ModalBody className="flex flex-col md:gap-4">
           <div className="flex items-center gap-3">
-          <p className="text-base">Avaliação</p>
-          <RatingMovieComponent filmId={film.id} />
+            <p className="text-base">Avaliação</p>
+            <RatingMovieComponent rating={rating} setRating={setRating} />
           </div>
           <textarea
             className="w-full h-[150px] p-4 rounded-lg border border-border"
