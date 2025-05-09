@@ -32,6 +32,7 @@ export const FavoriteButton = ({ filmId }: FavoriteButtonProps) => {
     <button
       onClick={handleToggleFavorite}
       className={`p-2 rounded-full cursor-pointer ${isFilmFavorite ? "bg-red-100 text-red-500" : "bg-gray-100"}`}
+      data-testid="favorite-button"
     >
       <Heart
         size={18}
