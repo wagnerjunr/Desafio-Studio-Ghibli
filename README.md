@@ -1,7 +1,5 @@
 # Desafio Studio Ghibli
 
-### Desenvolvido por Wagner Aparecido da Silva Junior
-
 ## Descrição do Projeto
 
 O projeto **Desafio Studio Ghibli** foi criado para exibir informações detalhadas sobre os filmes do Studio Ghibli. Ele inclui funcionalidades como filtros, ordenação, marcação de filmes como favoritos ou assistidos, e é responsivo. Além disso, foram implementados toasts para ações do usuário e testes unitários para garantir a qualidade do código.
@@ -23,28 +21,16 @@ O projeto consome informações dos filmes do Studio Ghibli por meio da API púb
 
 ## Dependências Utilizadas
 
-### **Bibliotecas Principais**
-
-* **\[@radix-ui/react-checkbox, @radix-ui/react-dialog, @radix-ui/react-label, @radix-ui/react-popover, @radix-ui/react-radio-group, @radix-ui/react-select, @radix-ui/react-slot, @radix-ui/react-tabs]**: Componentes de interface acessíveis e prontos para uso, como checkboxes, diálogos, labels, popovers, e mais.
-* **\[@tailwindcss/vite, tailwindcss, tailwind-merge]**: Utilizados para estilização com classes utilitárias e para simplificar a combinação de classes no Tailwind CSS.
-* **\[@tanstack/react-query]**: Para gerenciamento eficiente de estados de busca e cache de dados.
-* **\[axios]**: Biblioteca para realizar requisições HTTP.
-* **\[clsx, class-variance-authority]**: Para manipulação e composição de classes CSS de forma dinâmica.
-* **\[lucide-react]**: Ícones simples e altamente customizáveis.
-* **\[next-themes]**: Gerenciamento de temas claros e escuros.
-* **\[react-router-dom]**: Gerenciamento de rotas no aplicativo.
-* **\[sonner]**: Para exibição de toasts personalizados.
-* **\[zustand]**: Para gerenciamento de estado leve e flexível.
-* **\[vaul]**: Para animações fluidas e melhor UX.
-
-### **Ambiente de Desenvolvimento**
-
-* **\[@vitejs/plugin-react, vite]**: Ferramenta para construção e desenvolvimento rápido.
-* **\[eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh]**: Para garantir a qualidade e consistência do código.
-* **\[typescript, typescript-eslint]**: Tipagem estática para maior segurança e manutenção do código.
-* **\[vitest]**: Framework para testes unitários.
-* **\[@testing-library/react, @testing-library/jest-dom]**: Auxilia na escrita e validação de testes relacionados a componentes React.
-* **\[tw-animate-css]**: Extensão de animações para Tailwind CSS.
+* **React**: Biblioteca principal para criação de interfaces.
+* **React Router DOM**: Gerenciamento de rotas.
+* **Tailwind CSS**: Estilização com classes utilitárias.
+* **Shadcn/UI**: Componentes acessíveis e prontos para uso.
+* **Tanstack React Query**: Gerenciamento de dados assíncronos e cache.
+* **Axios**: Realização de requisições HTTP.
+* **Zustand**: Gerenciamento de estado leve.
+* **Sonner**: Exibição de notificações.
+* **Lucide React**: Biblioteca de ícones customizáveis.
+* **Vitest**: Framework para testes unitários.
 
 ---
 
@@ -129,3 +115,7 @@ Os testes foram implementados utilizando **Vitest** para validar as funcionalida
 * **Testes Unitários:** Cobertura de testes para validar as principais funcionalidades.
 
 ---
+
+## Autor
+
+Wagner Junior ([https://github.com/wagnerjunr](https://github.com/wagnerjunr))
