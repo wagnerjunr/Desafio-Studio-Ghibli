@@ -1,54 +1,131 @@
-# React + TypeScript + Vite
+# Desafio Studio Ghibli
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Desenvolvido por Wagner Aparecido da Silva Junior
 
-Currently, two official plugins are available:
+## Descrição do Projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O projeto **Desafio Studio Ghibli** foi criado para exibir informações detalhadas sobre os filmes do Studio Ghibli. Ele inclui funcionalidades como filtros, ordenação, marcação de filmes como favoritos ou assistidos, e é responsivo. Além disso, foram implementados toasts para ações do usuário e testes unitários para garantir a qualidade do código.
 
-## Expanding the ESLint configuration
+Todos os requisitos propostos foram concluídos com sucesso:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* Exibição das informações do filme.
+* Filtros para buscar filmes por critérios específicos.
+* Ordenação dos filmes.
+* Marcação de filmes como favoritos ou assistidos.
+* Design responsivo.
+* Toasts de notificação para ações do usuário.
+* Testes unitários utilizando **Vitest**.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+O projeto consome informações dos filmes do Studio Ghibli por meio da API pública:
+[https://ghibliapi.vercel.app/#tag/Films](https://ghibliapi.vercel.app/#tag/Films)
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Dependências Utilizadas
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+### **Bibliotecas Principais**
+
+* **\[@radix-ui/react-checkbox, @radix-ui/react-dialog, @radix-ui/react-label, @radix-ui/react-popover, @radix-ui/react-radio-group, @radix-ui/react-select, @radix-ui/react-slot, @radix-ui/react-tabs]**: Componentes de interface acessíveis e prontos para uso, como checkboxes, diálogos, labels, popovers, e mais.
+* **\[@tailwindcss/vite, tailwindcss, tailwind-merge]**: Utilizados para estilização com classes utilitárias e para simplificar a combinação de classes no Tailwind CSS.
+* **\[@tanstack/react-query]**: Para gerenciamento eficiente de estados de busca e cache de dados.
+* **\[axios]**: Biblioteca para realizar requisições HTTP.
+* **\[clsx, class-variance-authority]**: Para manipulação e composição de classes CSS de forma dinâmica.
+* **\[lucide-react]**: Ícones simples e altamente customizáveis.
+* **\[next-themes]**: Gerenciamento de temas claros e escuros.
+* **\[react-router-dom]**: Gerenciamento de rotas no aplicativo.
+* **\[sonner]**: Para exibição de toasts personalizados.
+* **\[zustand]**: Para gerenciamento de estado leve e flexível.
+* **\[vaul]**: Para animações fluidas e melhor UX.
+
+### **Ambiente de Desenvolvimento**
+
+* **\[@vitejs/plugin-react, vite]**: Ferramenta para construção e desenvolvimento rápido.
+* **\[eslint, @eslint/js, eslint-plugin-react-hooks, eslint-plugin-react-refresh]**: Para garantir a qualidade e consistência do código.
+* **\[typescript, typescript-eslint]**: Tipagem estática para maior segurança e manutenção do código.
+* **\[vitest]**: Framework para testes unitários.
+* **\[@testing-library/react, @testing-library/jest-dom]**: Auxilia na escrita e validação de testes relacionados a componentes React.
+* **\[tw-animate-css]**: Extensão de animações para Tailwind CSS.
+
+---
+
+## Pré-requisitos para Rodar o Projeto
+
+Certifique-se de ter as seguintes ferramentas instaladas no seu ambiente:
+
+* Node.js (versão 18 ou superior).
+* NPM ou Yarn.
+
+### Instalação
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/usuario/desafio-studio-ghibli.git
+   ```
+2. Entre no diretório do projeto:
+
+   ```bash
+   cd desafio-studio-ghibli
+   ```
+3. Instale as dependências:
+
+   ```bash
+   npm install
+   # ou
+   yarn install
+   ```
+
+### Rodando o Projeto
+
+1. Para rodar o projeto no ambiente de desenvolvimento:
+
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+2. Para gerar o build do projeto:
+
+   ```bash
+   npm run build
+   # ou
+   yarn build
+   ```
+3. Para visualizar o build:
+
+   ```bash
+   npm run preview
+   # ou
+   yarn preview
+   ```
+
+---
+
+## Testes Unitários
+
+Os testes foram implementados utilizando **Vitest** para validar as funcionalidades e garantir a qualidade do projeto.
+
+### Como Rodar os Testes
+
+1. Execute o seguinte comando para rodar os testes:
+
+   ```bash
+   npm run test
+   # ou
+   yarn test
+   ```
+2. A saída dos testes exibirá os resultados e eventuais erros encontrados.
+
+---
+
+## Funcionalidades Implementadas
+
+* **Exibição de Informações:** Detalhes completos sobre os filmes do Studio Ghibli.
+* **Filtros:** Filtragem de filmes com base em diferentes critérios, como gênero ou ano de lançamento.
+* **Ordenação:** Ordenação por nome, data de lançamento e outros critérios.
+* **Favoritar/Assistir:** Opção de marcar filmes como favoritos ou assistidos.
+* **Responsividade:** Design adaptado para diferentes tamanhos de tela.
+* **Toasts:** Notificações para ações do usuário, como favoritar um filme.
+* **Testes Unitários:** Cobertura de testes para validar as principais funcionalidades.
+
+---
