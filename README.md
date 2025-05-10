@@ -46,7 +46,7 @@ Certifique-se de ter as seguintes ferramentas instaladas no seu ambiente:
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/usuario/desafio-studio-ghibli.git
+   git clone https://github.com/wagnerjunr/Desafio-Studio-Ghibli.git
    ```
 2. Entre no diretório do projeto:
 
